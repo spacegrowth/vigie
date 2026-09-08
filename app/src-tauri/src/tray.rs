@@ -263,6 +263,29 @@ fn show_window(app: &AppHandle) {
     if let Some(window) = app.get_webview_window("main") {
         let _ = window.show();
         let _ = window.set_focus();
+        // Showing and focusing a window is not the same as bringing the
+        // APPLICATION forward: a background app stays behind whatever the
+        // user is looking at, so "Open" and "Check for updates…" appeared to
+        // do nothing. Activating it is the missing half.
+        activate_app();
+    }
+}
+
+/// `[NSApp activateIgnoringOtherApps: YES]` — the app is launched from the
+/// menu bar, so nothing else brings it to the front.
+fn activate_app() {
+    use objc2::msg_send;
+    use objc2::runtime::AnyClass;
+    // Sent by name rather than through objc2-app-kit's NSApplication, whose
+    // feature set here is trimmed to the event APIs the click-outside
+    // monitor needs.
+    unsafe {
+        if let Some(cls) = AnyClass::get(c"NSApplication") {
+            let ns_app: *mut AnyObject = msg_send![cls, sharedApplication];
+            if !ns_app.is_null() {
+                let _: () = msg_send![ns_app, activateIgnoringOtherApps: true];
+            }
+        }
     }
 }
 
