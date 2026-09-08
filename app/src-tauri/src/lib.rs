@@ -389,6 +389,7 @@ pub fn run() {
         )
         .invoke_handler(tauri::generate_handler![
             commands::github_client_id_ready,
+            commands::github_app_connection_url,
             commands::start_device_login,
             commands::poll_device_login,
             commands::open_github_signin_window,

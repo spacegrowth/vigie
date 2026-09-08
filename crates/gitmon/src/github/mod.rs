@@ -440,11 +440,13 @@ fn map_error_response(resp: reqwest::blocking::Response) -> EngineError {
                     || message.contains("third-party access")
                     || message.contains("restricting-access") =>
                 {
-                    EngineError::auth(format!(
+                    EngineError::auth(
                         "That organisation has not approved Vigie yet — your sign-in is fine. \
-                         Request or grant access under Authorized OAuth Apps, then add the repo \
-                         again: https://github.com/settings/connections/applications"
-                    ))
+                         Sign in again from Settings: GitHub's authorisation page lists your \
+                         organisations with a Grant or Request button, which is where access is \
+                         given. Then add the repo again."
+                            .to_string(),
+                    )
                 }
                 None => EngineError::auth(format!(
                     "That account is signed in, but cannot see this. GitHub said: {message}"

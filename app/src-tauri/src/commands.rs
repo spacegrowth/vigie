@@ -128,6 +128,18 @@ pub fn github_client_id_ready() -> bool {
     crate::GITHUB_CLIENT_ID != "REPLACE_ME"
 }
 
+/// The OAuth app's own page in GitHub settings — where a member requests
+/// organisation approval and an owner grants it. GitHub offers no API for
+/// making that request, so landing the user on the button is the most an app
+/// can do about an org that has not approved it.
+#[tauri::command(rename_all = "snake_case")]
+pub fn github_app_connection_url() -> String {
+    format!(
+        "https://github.com/settings/connections/applications/{}",
+        crate::GITHUB_CLIENT_ID
+    )
+}
+
 #[tauri::command(rename_all = "snake_case")]
 pub async fn start_device_login(state: State<'_, EngineState>) -> Result<DeviceLogin, EngineError> {
     if crate::GITHUB_CLIENT_ID == "REPLACE_ME" {
