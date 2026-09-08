@@ -11,9 +11,9 @@ pointed at a static feed:
 https://spacegrowth.github.io/vigie/latest.json
 ```
 
-served by GitHub Pages out of this repo's `site/` folder (same shape as the
+served by GitHub Pages out of this repo's `docs/` folder (same shape as the
 maintainer's other app, Jay, whose `site/appcast.xml` does the equivalent job
-for Sparkle). `site/index.html` is a plain landing page that reads the same
+for Sparkle). `docs/index.html` is a plain landing page that reads the same
 feed to fill in its download link — release day never has to touch it.
 
 The app checks that feed quietly on launch (App.svelte) and again whenever
@@ -26,8 +26,8 @@ Nothing here ever installs without that click.
 **These URLs only resolve once `spacegrowth/vigie` exists as this repo's
 remote and GitHub Pages is enabled on it (Settings → Pages → deploy from the
 `main` branch's `/site` folder, or a small Pages Actions workflow — either
-works, since `site/` is already a complete static site).** Until then,
-`site/latest.json` sits in the repo unpublished and every install stays on
+works, since `docs/` is already a complete static site).** Until then,
+`docs/latest.json` sits in the repo unpublished and every install stays on
 whatever version it already has.
 
 ## The signing key
@@ -64,7 +64,7 @@ key has none; add `-p` if a password is ever wanted, and export
 there is no recovery — minisign has no key-escrow story. Generate a new
 keypair the same way, put the new public key in `tauri.conf.json` under a new
 app version, and release that version through whatever channel still
-reaches existing installs (the DMG link on `site/index.html`, at minimum).
+reaches existing installs (the DMG link on `docs/index.html`, at minimum).
 Every install *older* than that version cannot auto-update past it — its old
 public key will never verify anything signed by the new private key. This is
 inherent to how the scheme works, not a bug to route around.
@@ -79,16 +79,16 @@ inherent to how the scheme works, not a bug to route around.
    client id, and the updater key above). It builds, signs, notarizes,
    staples, and — new since this packet — also:
    - copies the signed `.app.tar.gz` updater payload and the notarized
-     `.dmg` into `site/`, named `Vigie-<version>.app.tar.gz` /
+     `.dmg` into `docs/`, named `Vigie-<version>.app.tar.gz` /
      `Vigie-<version>.dmg` (versioned so a release is a distinct URL — no
      stale-CDN-cache risk from reusing one filename release after release);
-   - regenerates `site/latest.json` from that build's actual version,
+   - regenerates `docs/latest.json` from that build's actual version,
      signature (the `.sig` file `createUpdaterArtifacts: true` makes Tauri
      produce alongside the archive) and download URL.
-3. The script does **not** commit or push — `site/` is left updated on disk,
+3. The script does **not** commit or push — `docs/` is left updated on disk,
    same as any other file it touches. Review the diff, then:
    ```
-   git add site/
+   git add docs/
    git commit -m "Release <version>"
    git push
    ```
@@ -97,11 +97,11 @@ inherent to how the scheme works, not a bug to route around.
 
 ### A note on hosting the binaries
 
-`site/` hosting both the updater payload and the DMG (rather than a GitHub
+`docs/` hosting both the updater payload and the DMG (rather than a GitHub
 Release asset, which is what Jay's own script uses for its Sparkle
 enclosure) was picked because it's the simpler of the two for this repo
 today: no remote exists yet for `gh release create` to target, and Pages
-already serves whatever sits in `site/` with nothing else to configure.
+already serves whatever sits in `docs/` with nothing else to configure.
 Every release does add a new binary blob to the repo's git history this way
 — fine at the release cadence of a small team's internal tool, worth
 revisiting (Git LFS, or a GitHub Release after all) if the repo's size ever
@@ -109,7 +109,7 @@ becomes a real problem.
 
 ### A note on architectures
 
-`scripts/release.sh` writes `site/latest.json` with only the platform key
+`scripts/release.sh` writes `docs/latest.json` with only the platform key
 for the machine that ran it (`darwin-aarch64` on Apple silicon,
 `darwin-x86_64` on Intel) — it does not merge in a previous run's entry for
 the *other* architecture. Today that's fine: every release ships from one

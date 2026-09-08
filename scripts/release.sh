@@ -52,7 +52,7 @@ readonly APP_DIR="$REPO_ROOT/app"
 readonly BUNDLE_DIR="$APP_DIR/src-tauri/target/release/bundle"
 readonly APP_PATH="$BUNDLE_DIR/macos/Vigie.app"
 readonly DMG_DIR="$BUNDLE_DIR/dmg"
-readonly SITE_DIR="$REPO_ROOT/site"
+readonly SITE_DIR="$REPO_ROOT/docs"
 readonly KEYCHAIN_PROFILE="${VIGIE_NOTARY_PROFILE:-vigie-notary}"
 readonly UPDATER_KEY_PATH="${VIGIE_UPDATER_KEY_PATH:-$HOME/Documents/Vigie-Signing-Backup/updater.key}"
 # The signing identity is deliberately not written down in this repository.
@@ -110,7 +110,7 @@ if [[ -z "${TAURI_SIGNING_PRIVATE_KEY:-}" ]]; then
   export TAURI_SIGNING_PRIVATE_KEY="$(cat "$UPDATER_KEY_PATH")"
 fi
 
-command -v jq >/dev/null 2>&1 || die "jq is required to write site/latest.json (brew install jq)."
+command -v jq >/dev/null 2>&1 || die "jq is required to write docs/latest.json (brew install jq)."
 
 security find-identity -v -p codesigning | grep -qF "$SIGNING_IDENTITY" ||
   die "no \"$SIGNING_IDENTITY\" certificate in the keychain."
@@ -192,18 +192,18 @@ say "Gatekeeper assessment"
 spctl -a -vv -t install "$APP_PATH"
 spctl -a -vv -t install "$DMG_PATH"
 
-# ---- update site/latest.json -----------------------------------------------
+# ---- update docs/latest.json -----------------------------------------------
 #
 # The updater's own feed (app/src-tauri/tauri.conf.json's
 # plugins.updater.endpoints points at its published URL). Hosted the
 # simplest way for a GitHub Pages site: both binaries copied straight into
-# site/ alongside it, versioned by filename so a release is a distinct URL
+# docs/ alongside it, versioned by filename so a release is a distinct URL
 # (no stale-cache risk from reusing one filename across releases) — the
 # GitHub Release asset alternative was passed over because it needs a
 # remote and `gh` set up, which this repo doesn't have yet. Nothing here
-# commits or pushes: site/ is now updated on disk, same as every other file
+# commits or pushes: docs/ is now updated on disk, same as every other file
 # this script doesn't touch — see docs/RELEASING.md for publishing it.
-say "Updating site/latest.json"
+say "Updating docs/latest.json"
 
 readonly UPDATER_ARCHIVE="$(find "$BUNDLE_DIR/macos" -maxdepth 1 -name '*.app.tar.gz' -print -quit)"
 [[ -n "$UPDATER_ARCHIVE" && -f "$UPDATER_ARCHIVE.sig" ]] ||
@@ -254,7 +254,7 @@ jq -n \
 /bin/mv "$SITE_DIR/latest.json.tmp" "$SITE_DIR/latest.json"
 
 say "Done — $DMG_PATH"
-echo "  site/latest.json → $PLATFORM_KEY, v$VERSION"
-echo "  site/$UPDATER_ASSET_NAME (updater payload)"
-echo "  site/$DMG_ASSET_NAME (first-time install, linked from site/index.html)"
+echo "  docs/latest.json → $PLATFORM_KEY, v$VERSION"
+echo "  docs/$UPDATER_ASSET_NAME (updater payload)"
+echo "  docs/$DMG_ASSET_NAME (first-time install, linked from docs/index.html)"
 echo "  Not committed or pushed — see docs/RELEASING.md to publish."
