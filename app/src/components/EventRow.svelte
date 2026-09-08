@@ -231,7 +231,7 @@
   onclick={handleBlockClick}
   ondblclick={handleBlockDblClick}
 >
-  <div class="row">
+  <div class="row" class:stacked={fullPreview}>
     {#if showUnseenDot}<span class="dot" class:on={!event.seen}></span>{/if}
     <button class="actor" onclick={() => onFilterActor?.(event.actor_login)} title="Filter by {event.actor_login}">
       <span class="avatar-wrap">
@@ -247,17 +247,17 @@
     {/if}
     <KindBadge kind={event.kind} {iconOnly} eventTitle={event.title} />
     {#if compact}<span class="login">{event.actor_login}</span>{/if}
-    <button
-      class="title"
-      onclick={() => openDetail()}
-      ondblclick={() => openDetail(true)}
-      onkeydown={handleTitleKeydown}
-      title="Open (double-click or Enter for full width)"
-    >
-      <span class="title-text" class:strong={!compact} class:wrap={fullPreview}
-        >{titleOverride ?? event.title}</span
+    {#if !fullPreview}
+      <button
+        class="title"
+        onclick={() => openDetail()}
+        ondblclick={() => openDetail(true)}
+        onkeydown={handleTitleKeydown}
+        title="Open (double-click or Enter for full width)"
       >
-    </button>
+        <span class="title-text" class:strong={!compact}>{titleOverride ?? event.title}</span>
+      </button>
+    {/if}
     {#if repoLabel}
       <span class="muted repo" title="{repoLabel}{event.number ? ` #${event.number}` : ''}"
         >{repoLabel}{event.number ? ` #${event.number}` : ""}</span
@@ -267,6 +267,21 @@
       >{compact ? shortRelativeTime(event.occurred_at) : relativeTime(event.occurred_at)}</span
     >
   </div>
+  {#if fullPreview}
+    <!-- The tray popover's layout: who, kind and when on the small line
+         above, the subject on its own line here with two lines before it
+         truncates. Inline, the subject had to share a 400px row with all of
+         them and wrapped into a paragraph. -->
+    <button
+      class="subject"
+      onclick={() => openDetail()}
+      ondblclick={() => openDetail(true)}
+      onkeydown={handleTitleKeydown}
+      title={titleOverride ?? event.title}
+    >
+      <span class="title-text wrap strong">{titleOverride ?? event.title}</span>
+    </button>
+  {/if}
   {#if showPreview && previewText}
     <div class="preview" class:preview-compact={compact}>{previewText}</div>
   {/if}
@@ -416,6 +431,32 @@
      title either. `overflow-wrap` guards against a single unbroken token
      (a slug-like title with no spaces) forcing the row wider than its
      container instead of breaking. */
+  /* The popover's stacked layout (`fullPreview`). */
+  .row.stacked {
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 2px;
+  }
+  .row.stacked .login {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .row.stacked .time {
+    margin-left: auto;
+    width: auto;
+  }
+  .subject {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0 10px 2px 10px;
+    margin: 0;
+    text-align: left;
+    font: inherit;
+    color: var(--text);
+    cursor: pointer;
+  }
   .title-text.wrap {
     white-space: normal;
     overflow: hidden;

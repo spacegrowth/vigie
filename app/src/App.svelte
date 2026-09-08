@@ -43,6 +43,8 @@
   // renders the actual "install or dismiss" prompt once one is found — see
   // `checkForUpdatesQuietly` below for why any failure here stays silent.
   let pendingUpdate = $state<Update | null>(null);
+  /** Only ever set by an explicit check — see `checkForUpdatesQuietly`. */
+  let updateNotice = $state<string | null>(null);
   let view = $state<ViewName>("feed");
   let feedActorFilter = $state<string | null>(null);
   let summaryActorFilter = $state<string | null>(null);
@@ -167,7 +169,7 @@
     unlistenCheckUpdates = await listen("check-for-updates", () => {
       void getCurrentWindow().show();
       void getCurrentWindow().setFocus();
-      void checkForUpdatesQuietly();
+      void checkForUpdatesQuietly(true);
     });
     unlistenFocusMain = await listen("focus-main-window", () => {
       void getCurrentWindow().show();
@@ -190,10 +192,14 @@
    * already current" must look identical to the user; a failure is logged
    * (for anyone reading the console) but never surfaced any louder than
    * that. Only finding a real update ever sets `pendingUpdate` below. */
-  async function checkForUpdatesQuietly() {
+  async function checkForUpdatesQuietly(announce = false) {
     try {
       const update = await checkForUpdate();
       if (update) pendingUpdate = update;
+      // Asked explicitly (the menu bar item), silence is indistinguishable
+      // from broken — so say so when there is nothing. The launch-time check
+      // stays quiet, which is the whole point of it.
+      else if (announce) updateNotice = "Vigie is up to date.";
     } catch (e) {
       console.error("vigie: update check failed (quiet, non-blocking):", e);
     }
@@ -368,6 +374,12 @@
     <div class="main-column">
       <div class="content" class:dragging={dividerDragging} bind:this={contentEl}>
         <main class="main" class:hidden={$detailLayout === "reader" && $detailTarget != null}>
+          {#if updateNotice}
+            <div class="banner" role="status">
+              <span class="banner-text">{updateNotice}</span>
+              <button class="btn-text" onclick={() => (updateNotice = null)}>Dismiss</button>
+            </div>
+          {/if}
           {#if pendingUpdate}
             <UpdatePrompt update={pendingUpdate} onDismiss={() => (pendingUpdate = null)} />
           {/if}
