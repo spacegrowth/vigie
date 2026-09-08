@@ -274,15 +274,26 @@ fn show_window(app: &AppHandle) {
 /// `[NSApp activateIgnoringOtherApps: YES]` — the app is launched from the
 /// menu bar, so nothing else brings it to the front.
 fn activate_app() {
-    use objc2::msg_send;
     use objc2::runtime::AnyClass;
+    use objc2::{msg_send, sel};
     // Sent by name rather than through objc2-app-kit's NSApplication, whose
     // feature set here is trimmed to the event APIs the click-outside
     // monitor needs.
     unsafe {
         if let Some(cls) = AnyClass::get(c"NSApplication") {
             let ns_app: *mut AnyObject = msg_send![cls, sharedApplication];
-            if !ns_app.is_null() {
+            if ns_app.is_null() {
+                return;
+            }
+            // macOS 14 deprecated `activateIgnoringOtherApps:` and largely
+            // ignores it for an accessory/menu-bar app, which is why the
+            // window kept appearing behind everything. `activate` is the
+            // replacement; fall back only where it does not exist.
+            let responds: bool = msg_send![ns_app, respondsToSelector: sel!(activate)];
+            if responds {
+                let _: () = msg_send![ns_app, activate];
+            } else {
+                #[allow(deprecated)]
                 let _: () = msg_send![ns_app, activateIgnoringOtherApps: true];
             }
         }
