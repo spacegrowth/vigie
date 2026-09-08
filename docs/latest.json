@@ -1,6 +1,11 @@
 {
   "version": "0.1.0",
-  "notes": "Placeholder feed — no release has been cut yet. scripts/release.sh overwrites this file after its first real build; see docs/RELEASING.md.",
-  "pub_date": "1970-01-01T00:00:00Z",
-  "platforms": {}
+  "notes": "Vigie 0.1.0. See the source repository for what changed.",
+  "pub_date": "2026-09-08T03:04:39Z",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSa0tNSFRjd1l4aDN0ZnpaNkk4ckFMYlFJMnp1bGY3dldqSlBITUREM2oxNWhWMHQ2dk5YQ0h2V1lqWVIzTXQxbEpVZmVLT2kxUEphd0E4L3VKVDFJNCtsRzloSVJHWEFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg4ODM2NjM3CWZpbGU6VmlnaWUuYXBwLnRhci5negpabmNJZzNOcExYNUI5OE96ejZobUFuQVJ5U0R4MWNQZ1RsMXlML0VIQzQrYnpnUXFKcVBQOFNKUG9HanVrbGlHU29reXJyc0JVenhKeVdHQXNMb01Ddz09Cg==",
+      "url": "https://spacegrowth.github.io/vigie/Vigie-0.1.0.app.tar.gz"
+    }
+  }
 }

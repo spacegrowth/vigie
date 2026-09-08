@@ -1,182 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<!--
-  Vigie — landing page. Self-contained: no build step, no external assets,
-  fonts or CDNs, so it drops into GitHub Pages exactly as it sits in this
-  directory. Colours are the app's own "cool sage" tokens
-  (app/src/app.css's :root), copied by value rather than shared — this page
-  has no build step to import them through.
-
-  The download link and version number are filled in at load time from
-  ./latest.json (the same feed the app's own updater reads) rather than
-  hand-edited here, so a release only ever has to touch latest.json plus
-  the two binaries scripts/release.sh copies in — never this file.
--->
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vigie — GitHub activity, without the tabs</title>
-<meta name="description" content="A native macOS app that watches GitHub repositories for what your team is doing, with desktop notifications. No local clone required.">
-<link rel="icon" href="icons/icon.png">
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vigie — watch your team's GitHub activity</title>
+<meta name="description" content="A native Mac app that watches your team's GitHub activity and tells you what is stuck, what is risky, and who needs help.">
 <style>
-  :root {
-    --surface: #f6f8f5;
-    --surface-card: #fff;
-    --text: #1f2a22;
-    --muted: #7c8a80;
-    --accent: #2f7a4f;
-    --accent-strong: #24613e;
-    --border: #d5ddd2;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--surface);
-    color: var(--text);
-    font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  }
-  main {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 72px 24px 48px;
-  }
-  .icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 16px;
-    display: block;
-    margin-bottom: 24px;
-  }
-  h1 {
-    font-size: 28px;
-    margin: 0 0 4px;
-  }
-  .tagline {
-    color: var(--muted);
-    margin: 0 0 28px;
-    font-size: 16px;
-  }
-  p {
-    margin: 0 0 16px;
-  }
-  .cta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 32px 0;
-  }
-  .btn {
-    display: inline-block;
-    background: var(--accent);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 12px 22px;
-    border-radius: 10px;
-    transition: background 0.12s ease;
-  }
-  .btn:hover {
-    background: var(--accent-strong);
-  }
-  .btn[aria-disabled="true"] {
-    background: var(--muted);
-    pointer-events: none;
-  }
-  .version {
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .card {
-    background: var(--surface-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin: 28px 0;
-  }
-  .card h2 {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--muted);
-    margin: 0 0 10px;
-  }
-  .card ul {
-    margin: 0;
-    padding-left: 20px;
-  }
-  .card li {
-    margin: 4px 0;
-  }
-  footer {
-    margin-top: 48px;
-    color: var(--muted);
-    font-size: 13px;
-  }
-  footer a {
-    color: inherit;
-  }
-</style>
-</head>
-<body>
-<main>
-  <img class="icon" src="icons/icon.png" alt="">
+:root{--bg:#f6f8f5;--card:#fff;--text:#1f2a22;--muted:#7c8a80;--line:#d5ddd2;--accent:#2f7a4f;--deep:#1b4d31}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px}
+header{padding:72px 0 40px;text-align:center}
+h1{font-size:42px;margin:20px 0 6px;letter-spacing:-.02em}
+.say{color:var(--muted);font-size:14px;margin-bottom:18px}
+.pitch{font-size:19px;color:#33413a;max-width:620px;margin:0 auto 28px}
+.dl{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;text-decoration:none;padding:12px 22px;border-radius:9px;font-weight:600}
+.dl:hover{background:var(--deep)}
+.req{color:var(--muted);font-size:13px;margin-top:12px}
+section{padding:44px 0;border-top:1px solid var(--line)}
+h2{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 20px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.grid h3{font-size:16px;margin:0 0 6px}
+.grid p{margin:0;color:#33413a;font-size:14px}
+.shot{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+.cap{color:var(--muted);font-size:13px;margin:10px 2px 0}
+.row{display:flex;align-items:center;gap:10px;padding:9px 4px;font-size:13.5px}
+.av{width:22px;height:22px;border-radius:50%;background:#cfe6d5;color:var(--accent);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.who{font-weight:500;flex-shrink:0}
+.kind{font-size:11px;padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0}
+.ttl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.when{color:var(--muted);font-size:12px;flex-shrink:0}
+.rb{color:#33413a;font-size:13px;border-left:2px solid var(--line);margin:0 0 8px 32px;padding-left:10px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.tile .n{font-size:26px;font-weight:650}
+.tile .l{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:4px}
+footer{padding:40px 0 64px;color:var(--muted);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+footer a{color:var(--accent)}
+@media (max-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}h1{font-size:34px}}
+</style></head><body>
+<div class="wrap">
+<header>
+  <svg viewBox="0 0 24 24" width="112" height="112" aria-hidden="true" style="border-radius:24px">
+<defs><linearGradient id="t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8ece5"/><stop offset="1" stop-color="#d3ddcf"/></linearGradient>
+<linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b4d31" stop-opacity="0"/><stop offset="1" stop-color="#1b4d31" stop-opacity="0.26"/></linearGradient>
+<clipPath id="c"><rect width="24" height="24" rx="5.32"/></clipPath></defs>
+<rect width="24" height="24" rx="5.32" fill="url(#t)"/><g clip-path="url(#c)"><path d="M0 13.5C6 10.5 18 10.5 24 13.5V24H0z" fill="url(#w)"/></g><g transform="translate(12,12) scale(1.1) translate(-12,-12)"><g transform="rotate(-38 12 12)">
+<rect x="3.516" y="10.57" width="2.812" height="2.859" rx="0.609" fill="#cfe8d6"/>
+<rect x="5.859" y="10.141" width="4.922" height="3.717" rx="0.703" fill="#2f7a4f"/>
+<rect x="10.312" y="9.713" width="5.039" height="4.575" rx="0.797" fill="#2f7a4f"/>
+<rect x="14.883" y="9.141" width="5.273" height="5.719" rx="0.938" fill="#2f7a4f"/>
+<rect x="5.812" y="10.141" width="0.422" height="3.717" rx="0.211" fill="#1b4d31"/>
+<rect x="10.266" y="9.713" width="0.422" height="4.575" rx="0.211" fill="#1b4d31"/>
+<rect x="14.836" y="9.141" width="0.422" height="5.719" rx="0.211" fill="#1b4d31"/>
+<rect x="19.594" y="9.998" width="0.609" height="4.003" rx="0.305" fill="#1b4d31"/></g>
+<circle cx="19.266" cy="4.594" r="0.891" fill="#2f7a4f"/><circle cx="21.234" cy="6.984" r="0.516" fill="#2f7a4f"/></g></svg>
   <h1>Vigie</h1>
-  <p class="tagline">Pronounced <em>vee-zhee</em> — French for the lookout in a ship's crow's nest.</p>
+  <div class="say">vee-ZHEE · a lookout</div>
+  <p class="pitch">A native Mac app that watches your team's GitHub activity — and tells you what is stuck, what is risky, and who needs help.</p>
+  <a class="dl" href="Vigie-0.1.0.dmg" id="dl">Download for macOS</a>
+  <div class="req">Apple silicon · macOS 13 or later · signed and notarized</div>
+</header>
 
-  <p>
-    Vigie is a native macOS app that watches GitHub repositories for what your team is
-    doing — commits, pull requests, reviews and comments — for a chosen set of people
-    or everyone, with desktop notifications. No local clone required.
-  </p>
+<section>
+  <h2>The feed</h2>
+  <div class="shot"><div class="row"><span class="av">A</span><span class="who">aiko</span><span class="kind" style="color:#3a5d80;background:#dfe7ee">Commit</span><span class="ttl">fix(retry): bound exponential backoff at 30s</span><span class="when">12m</span></div><div class="row"><span class="av">M</span><span class="who">marcus</span><span class="kind" style="color:#2f7a4f;background:#dcece0">PR opened</span><span class="ttl">Add per-tenant rate limits</span><span class="when">41m</span></div><div class="rb">Splits the shared bucket per tenant so one noisy customer cannot starve the rest.</div><div class="row"><span class="av">L</span><span class="who">lena</span><span class="kind" style="color:#8a6d1f;background:#f2ead2">Review</span><span class="ttl">Review: changes requested</span><span class="when">1h</span></div><div class="row"><span class="av">P</span><span class="who">priya</span><span class="kind" style="color:#6a4f9a;background:#e6e2ee">Issue</span><span class="ttl">Dashboard latency spikes after deploy</span><span class="when">3h</span></div></div>
+  <p class="cap">Commits, pull requests, reviews, issues and comments across every repo you watch, in one place. Filter by repo, team or person.</p>
+</section>
 
-  <div class="cta">
-    <a class="btn" id="download" href="#" aria-disabled="true">Download for Mac</a>
-    <span class="version" id="version">checking for a release…</span>
+<section>
+  <h2>The summary</h2>
+  <div class="tiles"><div class="tile"><div class="n">7</div><div class="l">Open PRs</div></div><div class="tile"><div class="n">3</div><div class="l">Awaiting review</div></div><div class="tile"><div class="n">1</div><div class="l">Unreviewed merges</div></div><div class="tile"><div class="n">4h</div><div class="l">P90 to first review</div></div></div>
+  <p class="cap">Not a wall of counts: open work by age, pull requests waiting on a review, merges that were never reviewed, and the ones worth a careful read.</p>
+</section>
+
+<section>
+  <h2>What it does</h2>
+  <div class="grid">
+    <div><h3>Lives in your menu bar</h3><p>A glance at what changed, without opening anything. Click a line to read it in full.</p></div>
+    <div><h3>Stays out of your way</h3><p>Notifications tell you who did what. No snippets, no noise, and quiet hours if you want them.</p></div>
+    <div><h3>Reads without leaving</h3><p>Diffs, review comments and conversations render in the app. GitHub is one click away when you need to act.</p></div>
+    <div><h3>Yours alone</h3><p>Everything is stored locally in SQLite. No account, no server, no telemetry — your token talks to GitHub and nothing else.</p></div>
+    <div><h3>Several accounts</h3><p>Watch repos across personal and work accounts at once, each with its own credentials in the keychain.</p></div>
+    <div><h3>Careful with your budget</h3><p>Polling is cached and shows what is left of GitHub's hourly allowance, so it never burns through it behind your back.</p></div>
   </div>
+</section>
 
-  <div class="card">
-    <h2>Requirements</h2>
-    <ul>
-      <li>macOS 13 or later, Apple silicon</li>
-      <li>A GitHub account (device-flow sign-in, no token to paste)</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>Updates</h2>
-    <p style="margin:0">
-      Vigie checks this site quietly on launch and lets you install a new version when
-      one is found — never without asking first.
-    </p>
-  </div>
-
-  <footer>
-    <a href="https://github.com/spacegrowth/vigie">Source on GitHub</a>
-  </footer>
-</main>
-<script>
-  // Reads the same feed the app's own updater does (see
-  // app/src-tauri/tauri.conf.json's plugins.updater.endpoints) so this page
-  // never goes stale relative to what scripts/release.sh last published.
-  fetch("latest.json")
-    .then((r) => r.json())
-    .then((feed) => {
-      const platform = Object.values(feed.platforms || {})[0];
-      const versionEl = document.getElementById("version");
-      const downloadEl = document.getElementById("download");
-      if (!platform) {
-        versionEl.textContent = "no release published yet";
-        return;
-      }
-      versionEl.textContent = "v" + feed.version + " · notarized";
-      // The DMG sits beside the updater archive under the same version —
-      // see scripts/release.sh's "Updating site/" step.
-      downloadEl.href = "Vigie-" + feed.version + ".dmg";
-      downloadEl.removeAttribute("aria-disabled");
-    })
-    .catch(() => {
-      document.getElementById("version").textContent = "couldn't load the latest release";
-    });
-</script>
-</body>
-</html>
+<footer>
+  Free and open source · <a href="https://github.com/spacegrowth/vigie">github.com/spacegrowth/vigie</a><br>
+  Updates install themselves once you have it.
+</footer>
+</div></body></html>

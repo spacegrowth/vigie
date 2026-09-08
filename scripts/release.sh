@@ -109,6 +109,11 @@ if [[ -z "${TAURI_SIGNING_PRIVATE_KEY:-}" ]]; then
      then put the PUBLIC key it prints into app/src-tauri/tauri.conf.json's plugins.updater.pubkey."
   export TAURI_SIGNING_PRIVATE_KEY="$(cat "$UPDATER_KEY_PATH")"
 fi
+# The key was generated without a passphrase, but Tauri prompts for one
+# unless it is told there is none — and a prompt in a non-interactive
+# release run fails with "Device not configured". Setting it empty answers
+# the prompt. Export a real one here if the key ever gets a passphrase.
+export TAURI_SIGNING_PRIVATE_KEY_PASSWORD="${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}"
 
 command -v jq >/dev/null 2>&1 || die "jq is required to write docs/latest.json (brew install jq)."
 
@@ -256,5 +261,7 @@ jq -n \
 say "Done — $DMG_PATH"
 echo "  docs/latest.json → $PLATFORM_KEY, v$VERSION"
 echo "  docs/$UPDATER_ASSET_NAME (updater payload)"
+# Keep the landing page's download link pointing at the version just built.
+/usr/bin/sed -i '' -E "s|href=\"Vigie-[^\"]*\.dmg\"|href=\"$DMG_ASSET_NAME\"|" "$SITE_DIR/index.html"
 echo "  docs/$DMG_ASSET_NAME (first-time install, linked from docs/index.html)"
 echo "  Not committed or pushed — see docs/RELEASING.md to publish."
