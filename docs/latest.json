@@ -1,11 +1,11 @@
 {
-  "version": "0.1.3",
-  "notes": "Vigie 0.1.3. See the source repository for what changed.",
-  "pub_date": "2026-09-08T04:02:50Z",
+  "version": "0.1.4",
+  "notes": "Vigie 0.1.4. See the source repository for what changed.",
+  "pub_date": "2026-09-08T04:13:31Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSa0tNSFRjd1l4aDM0RUs5bDFXTEhUdDlscXlzVjRDd1M1K2RYckV3eU5yTzBpSGxqQm5adFRCbUdhWlh5VTJKclU1SlErR0hXeXVBSVd2QTA3RkJOQ2dnYlB6RThOWHdJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg4ODQwMTM0CWZpbGU6VmlnaWUuYXBwLnRhci5negppdFhRa1pwNldVN1hjOG9oNXBXU1dnKzJUZkJ4WHJiT083VVQ1cStDbnFyS0c3MFBRVlNSUnlCcTJtMTlnTXhtbGhlU3dmS3htd09QOXcrVDVnakxDUT09Cg==",
-      "url": "https://spacegrowth.github.io/vigie/Vigie-0.1.3.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSa0tNSFRjd1l4aDh6b3FMN3FFa3JNQStta0NpTE8vYTlnRFFNLzFVT3RtNFhsaVBnYXpsakJJdkpuaG5UQnNLcVdNWFg1QWhIWEwwNDhNVnMrRnF5bS91SkZ3eGowWndVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg4ODQwNzc0CWZpbGU6VmlnaWUuYXBwLnRhci5negpPNzZDVnhCMHZRYzFKQm9YemQ5WlhaYlVnSFhKbzdGWDdiRDBacE00cURmMkl1S0VXN3hzUlhhOSs5YzkzL2d6S1daNUx4SWJxUDUvTzR2a21FQndCZz09Cg==",
+      "url": "https://spacegrowth.github.io/vigie/Vigie-0.1.4.app.tar.gz"
     }
   }
 }
