@@ -12,6 +12,7 @@ use objc2::rc::Retained;
 use objc2::runtime::AnyObject;
 use objc2_app_kit::{NSEvent, NSEventMask};
 use tauri::menu::{Menu, MenuEvent, MenuItem};
+use tauri::Emitter;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{App, AppHandle, Manager, PhysicalPosition, Position, Rect};
 
@@ -319,8 +320,15 @@ pub fn setup(app: &App) -> tauri::Result<()> {
 
     let poll_item = MenuItem::with_id(app, "poll_now", "Poll now", true, None::<&str>)?;
     let open_item = MenuItem::with_id(app, "open", "Open", true, None::<&str>)?;
+    // Updates are reachable from the menu bar too, not only from a banner in
+    // a window someone may never open. The menu never installs anything: it
+    // shows the window and asks it to check, so the decision stays in one
+    // place, with the version named and consent asked for there.
+    let updates_item =
+        MenuItem::with_id(app, "check_updates", "Check for updates…", true, None::<&str>)?;
     let quit_item = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
-    let menu = Menu::with_items(app, &[&poll_item, &open_item, &quit_item])?;
+    let menu =
+        Menu::with_items(app, &[&poll_item, &open_item, &updates_item, &quit_item])?;
 
     let icon = tauri::image::Image::from_bytes(TRAY_ICON_BYTES)?;
 
@@ -362,6 +370,10 @@ fn handle_menu_event(app: &AppHandle, event: MenuEvent) {
             });
         }
         "open" => show_window(app),
+        "check_updates" => {
+            show_window(app);
+            let _ = app.emit("check-for-updates", ());
+        }
         "quit" => app.exit(0),
         _ => {}
     }

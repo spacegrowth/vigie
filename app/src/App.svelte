@@ -102,6 +102,7 @@
   let unlistenRateLimited: (() => void) | undefined;
   let unlistenSignedOut: (() => void) | undefined;
   let unlistenOpenDetail: (() => void) | undefined;
+  let unlistenCheckUpdates: (() => void) | undefined;
   let unlistenFocusMain: (() => void) | undefined;
   let clockInterval: ReturnType<typeof setInterval> | undefined;
 
@@ -160,6 +161,14 @@
       void getCurrentWindow().show();
       void getCurrentWindow().setFocus();
     });
+    // The menu bar's "Check for updates…" — it shows the window and asks here,
+    // so a check started from the menu ends up in the same banner, with the
+    // same consent, as the quiet one on launch.
+    unlistenCheckUpdates = await listen("check-for-updates", () => {
+      void getCurrentWindow().show();
+      void getCurrentWindow().setFocus();
+      void checkForUpdatesQuietly();
+    });
     unlistenFocusMain = await listen("focus-main-window", () => {
       void getCurrentWindow().show();
       void getCurrentWindow().setFocus();
@@ -195,6 +204,7 @@
     unlistenRateLimited?.();
     unlistenSignedOut?.();
     unlistenOpenDetail?.();
+    unlistenCheckUpdates?.();
     unlistenFocusMain?.();
     if (clockInterval) clearInterval(clockInterval);
     window.removeEventListener("keydown", handleKeydown);
