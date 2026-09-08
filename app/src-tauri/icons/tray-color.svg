@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="93.25 -3.68 940 940" width="940" height="940">
+  <!-- Vigie tray glyph, colour variant: the spyglass mark rasterised at
+       menu-bar size for the coloured (non-template) tray icon.
+
+       This is the mark group lifted verbatim (same rects, same rotate/
+       scale transform, same fill colours) out of ../icons/source.svg's
+       stepped draw-tube spyglass — no tile, no wash, transparent canvas,
+       so the icon reads as just the mark against the menu bar. It is
+       NOT kept in sync with Logo.svelte any more: the in-app mark is a
+       separate decision not made yet, and this file now tracks
+       the app icon's approved mark instead. If Logo.svelte's own spyglass
+       geometry changes, that does not need to be mirrored here, and vice
+       versa, until that decision is made.
+
+       The viewBox is cropped tightly around the mark's own bounding box
+       (computed from the rotated/scaled rects+stars) rather than reusing
+       source.svg's full 0 0 1024 1024 frame, so the glyph fills the
+       22x22/44x44 tray box with deliberate, measured padding instead of
+       whatever margin the 1024 frame happened to leave: ~63.65 units of
+       viewBox on the left/right (~1.49px at 22px, ~2.98px at 44px) and
+       ~126.3 units top/bottom (more headroom, since the mark's bbox is
+       wider than it is tall) — comfortably over the required 1px/2px
+       minimum on every side, so macOS doesn't clip it against a
+       neighbouring menu bar item. -->
+  <g transform="translate(512,512) scale(1.1) translate(-512,-512)">
+    <g transform="rotate(-38 512 512)">
+      <!-- eyepiece -->
+      <rect x="150" y="451.0" width="120" height="122.0" rx="26" fill="#cfe8d6"/>
+      <!-- draw-tube segments, widening toward the objective -->
+      <rect x="250" y="432.7" width="210" height="158.6" rx="30" fill="#2f7a4f"/>
+      <rect x="440" y="414.4" width="215" height="195.2" rx="34" fill="#2f7a4f"/>
+      <rect x="635" y="390.0" width="225" height="244.0" rx="40" fill="#2f7a4f"/>
+      <!-- joint rings -->
+      <rect x="248" y="432.7" width="18" height="158.6" rx="9" fill="#1b4d31"/>
+      <rect x="438" y="414.4" width="18" height="195.2" rx="9" fill="#1b4d31"/>
+      <rect x="633" y="390.0" width="18" height="244.0" rx="9" fill="#1b4d31"/>
+      <!-- dark cap at the wide end -->
+      <rect x="836" y="426.6" width="26" height="170.8" rx="13" fill="#1b4d31"/>
+    </g>
+    <circle cx="822" cy="196" r="38" fill="#2f7a4f"/>
+    <circle cx="906" cy="298" r="22" fill="#2f7a4f"/>
+  </g>
+</svg>

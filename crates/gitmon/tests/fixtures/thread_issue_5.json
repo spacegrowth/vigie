@@ -1,0 +1,9 @@
+{
+  "number": 5,
+  "state": "closed",
+  "title": "Tray icon is blurry on non-retina displays",
+  "html_url": "https://github.com/acme/platform/issues/5",
+  "user": { "login": "bob", "id": 2, "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4" },
+  "body": "The 16pt asset is upscaled.",
+  "created_at": "1970-01-01T00:00:10Z"
+}

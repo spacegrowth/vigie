@@ -1,0 +1,13 @@
+[
+  {
+    "sha": "dada0033333333333333333333333333333333333",
+    "html_url": "https://github.com/acme/platform/commit/dada0033333333333333333333333333333333333",
+    "commit": {
+      "author": { "name": "Carla Diaz", "email": "carla@acme.test", "date": "{{TS-3600}}" },
+      "committer": { "name": "Carla Diaz", "email": "carla@acme.test", "date": "{{TS-3600}}" },
+      "message": "Vendor the sqlite amalgamation"
+    },
+    "author": null,
+    "committer": null
+  }
+]

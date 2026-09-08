@@ -1,0 +1,11 @@
+[
+  {
+    "sha": "ccc3333333333333333333333333333333333333",
+    "filename": "crates/gitmon/src/store.rs",
+    "status": "renamed",
+    "additions": 3,
+    "deletions": 1,
+    "changes": 4,
+    "patch": "@@ -1,3 +1,3 @@\n-mod db;\n+mod store;"
+  }
+]

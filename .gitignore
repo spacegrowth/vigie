@@ -1,0 +1,24 @@
+/target
+**/target
+/app/build
+/app/*.xcodeproj
+/app/DerivedData
+/app/GitmonFFI.xcframework
+/app/Generated
+.DS_Store
+.env
+.env.*
+*.xcuserstate
+*.pem
+*.p12
+*.p8
+*.key
+*.mobileprovision
+.vite/
+
+# The updater's minisign private key lives at ~/Documents/Vigie-Signing-Backup/updater.key —
+# entirely outside this repo — and never has a reason to be copied in. This
+# line (and the *.key rule above, which already matches it) is belt and
+# braces: see scripts/release.sh's header and docs/RELEASING.md.
+updater.key
+updater.key.pub

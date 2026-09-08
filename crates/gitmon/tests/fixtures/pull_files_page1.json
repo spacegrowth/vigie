@@ -1,0 +1,19 @@
+[
+  {
+    "sha": "aaa1111111111111111111111111111111111111",
+    "filename": "crates/gitmon/src/poll.rs",
+    "status": "modified",
+    "additions": 40,
+    "deletions": 12,
+    "changes": 52,
+    "patch": "@@ -18,7 +18,7 @@\n-const OVERLAP: i64 = 60;\n+pub const OVERLAP_SECS: i64 = 300;"
+  },
+  {
+    "sha": "bbb2222222222222222222222222222222222222",
+    "filename": "docs/design/feed.png",
+    "status": "added",
+    "additions": 0,
+    "deletions": 0,
+    "changes": 0
+  }
+]

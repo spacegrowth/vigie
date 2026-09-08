@@ -1,0 +1,40 @@
+[
+  {
+    "sha": "c0ffee1111111111111111111111111111111111",
+    "html_url": "https://github.com/acme/platform/commit/c0ffee1111111111111111111111111111111111",
+    "commit": {
+      "author": { "name": "Alice Ng", "email": "alice@acme.test", "date": "{{TS-5400}}" },
+      "committer": { "name": "Alice Ng", "email": "alice@acme.test", "date": "{{TS-5400}}" },
+      "message": "Add sparkline to the tray menu\n\nKeeps   the   last hour of activity\nin the menu bar."
+    },
+    "author": {
+      "login": "alice",
+      "id": 1,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4"
+    },
+    "committer": {
+      "login": "alice",
+      "id": 1,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4"
+    }
+  },
+  {
+    "sha": "beef0022222222222222222222222222222222222",
+    "html_url": "https://github.com/acme/platform/commit/beef0022222222222222222222222222222222222",
+    "commit": {
+      "author": { "name": "Bob Reyes", "email": "bob@acme.test", "date": "{{TS-4800}}" },
+      "committer": { "name": "Bob Reyes", "email": "bob@acme.test", "date": "{{TS-4800}}" },
+      "message": "Cache org member lookups for an hour"
+    },
+    "author": {
+      "login": "bob",
+      "id": 2,
+      "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4"
+    },
+    "committer": {
+      "login": "bob",
+      "id": 2,
+      "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4"
+    }
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 9100,
+    "html_url": "https://github.com/acme/platform/pull/101#discussion_r9100",
+    "pull_request_url": "https://api.github.com/repos/acme/platform/pulls/101",
+    "user": {
+      "login": "alice",
+      "id": 1,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4"
+    },
+    "body": "Pulled this into OVERLAP_SECS.",
+    "path": "crates/gitmon/src/poll.rs",
+    "line": 18,
+    "created_at": "{{TS-1300}}",
+    "updated_at": "{{TS-1300}}"
+  }
+]

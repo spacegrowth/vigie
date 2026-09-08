@@ -1,0 +1,6 @@
+{
+  "version": "0.1.0",
+  "notes": "Placeholder feed — no release has been cut yet. scripts/release.sh overwrites this file after its first real build; see docs/RELEASING.md.",
+  "pub_date": "1970-01-01T00:00:00Z",
+  "platforms": {}
+}

@@ -1,0 +1,17 @@
+{
+  "number": 101,
+  "state": "open",
+  "title": "Split the poller out of the engine",
+  "html_url": "https://github.com/acme/platform/pull/101",
+  "user": { "login": "alice", "id": 1, "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4" },
+  "body": "Moves fetch/derive into its own module\n\nso the store lock is never held across a network call.",
+  "created_at": "1970-01-01T00:00:10Z",
+  "updated_at": "1970-01-01T00:10:00Z",
+  "closed_at": null,
+  "merged_at": null,
+  "head": { "label": "acme:split-poller", "ref": "split-poller" },
+  "base": { "label": "acme:main", "ref": "main" },
+  "additions": 120,
+  "deletions": 30,
+  "changed_files": 4
+}

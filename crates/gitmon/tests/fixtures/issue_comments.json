@@ -1,0 +1,28 @@
+[
+  {
+    "id": 9001,
+    "html_url": "https://github.com/acme/platform/pull/101#issuecomment-9001",
+    "issue_url": "https://api.github.com/repos/acme/platform/issues/101",
+    "user": {
+      "login": "bob",
+      "id": 2,
+      "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4"
+    },
+    "body": "Nice. One thought: can the overlap window be a constant?",
+    "created_at": "{{TS-1500}}",
+    "updated_at": "{{TS-1500}}"
+  },
+  {
+    "id": 9002,
+    "html_url": "https://github.com/acme/platform/issues/5#issuecomment-9002",
+    "issue_url": "https://api.github.com/repos/acme/platform/issues/5",
+    "user": {
+      "login": "alice",
+      "id": 1,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4"
+    },
+    "body": "Confirmed on a 1080p external display.",
+    "created_at": "{{TS-1400}}",
+    "updated_at": "{{TS-1400}}"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 7001,
+    "state": "APPROVED",
+    "body": "Reads well. Shipping.",
+    "html_url": "https://github.com/acme/platform/pull/101#pullrequestreview-7001",
+    "user": {
+      "login": "bob",
+      "id": 2,
+      "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4"
+    },
+    "submitted_at": "{{TS-1700}}"
+  },
+  {
+    "id": 7002,
+    "state": "PENDING",
+    "body": "draft notes, not submitted",
+    "html_url": "https://github.com/acme/platform/pull/101#pullrequestreview-7002",
+    "user": {
+      "login": "alice",
+      "id": 1,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4"
+    },
+    "submitted_at": null
+  }
+]

@@ -1,0 +1,96 @@
+[package]
+name = "gitmon-app"
+version = "0.1.0"
+description = "git-monitor macOS app"
+edition = "2021"
+license = "MIT"
+
+# This crate is nested inside the repo's Cargo workspace (root Cargo.toml,
+# members = ["crates/*"]) but is NOT one of its members and must not become
+# one — the app packet's boundaries forbid editing the workspace Cargo.toml.
+# An empty [workspace] table here tells Cargo to treat app/src-tauri as its
+# own workspace root instead of erroring "current package believes it's in
+# a workspace when it's not", so it builds and locks independently with its
+# own Cargo.lock.
+[workspace]
+
+[[bin]]
+# The dev binary is named like the bundled app so `tauri dev` shows "Vigie" in
+# the menu bar, Dock and keychain prompts instead of the crate name.
+name = "Vigie"
+path = "src/main.rs"
+
+[lib]
+name = "gitmon_app_lib"
+crate-type = ["staticlib", "cdylib", "lib"]
+
+# `mock` swaps the real engine for the in-process `MockEngine`, so the UI can
+# be developed with no network and no GitHub credential. Off by default: a
+# plain `cargo build` / `npm run tauri build` ships the real engine. At
+# runtime `GITMON_MOCK=1` picks the mock too, but only in a build that has
+# this feature compiled in — a release binary has no mock to fall back to.
+[features]
+mock = []
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# The real engine. A path dependency on a crate in the repo's *other*
+# workspace (root Cargo.toml, members = ["crates/*"]); a path dep does not
+# have to live in the same workspace, so this stays outside it exactly as
+# the [workspace] table above intends.
+gitmon = { path = "../../crates/gitmon" }
+# `macos-private-api` (and tauri.conf.json's matching `macOSPrivateApi: true`)
+# briefly lived here on 2026-09-07 so the tray popover window could be
+# `"transparent": true` and show rounded corners with a shadow. It was taken
+# back out the same day: Apple rejects App Store submissions that use a
+# private API (tauri-utils' own doc comment warns of exactly this), and the
+# maintainer wants an App Store build to stay possible. The popover is an
+# opaque, square panel instead. Don't re-add this without re-checking that
+# tradeoff.
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
+tauri-plugin-notification = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-autostart = "2"
+# Checks site/latest.json (GitHub Pages) for a newer signed build and installs
+# it on relaunch — see lib.rs and scripts/release.sh. `process` is the
+# separate official plugin `relaunch()` comes from; the updater plugin itself
+# only downloads and unpacks the update.
+tauri-plugin-updater = "2"
+tauri-plugin-process = "2"
+# Remembers the main window's size and position across launches (packet
+# gm-window-r1) — Tauri's own official plugin, so this is a denylist call
+# (skip "tray-popover", it's positioned under the menu bar icon fresh every
+# time it opens — see lib.rs's `run()`) rather than hand-rolled save/restore
+# logic. Pinned to the newest release compatible with the `tauri = "2"` above
+# (its own manifest asks for `^2.6`; this workspace resolves tauri 2.11.5).
+tauri-plugin-window-state = "2.4.1"
+keyring = { version = "3", features = ["apple-native"] }
+tokio = { version = "1", features = ["rt-multi-thread", "time", "macros"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Not in the packet's listed dep set, but pure std has no timezone support
+# and quiet_hours is specified in *local* minutes-after-midnight — needed
+# to compute that without shelling out. Kept minimal: no serde/wasm feature.
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+# tray.rs's click-outside-hides-the-popover fix (see `install_click_outside_monitor`)
+# needs a raw AppKit global mouse-down monitor — there's no such thing through
+# Tauri's own API. All three crates below are already deep in this dependency
+# tree (tao/wry pull them in transitively for their own macOS backend, at the
+# same versions pinned here — confirmed via Cargo.lock before adding these),
+# just not usable directly without naming them as our own dependencies too.
+# `default-features = false` on objc2-app-kit matters: its default pulls in
+# generated bindings for ~300 AppKit classes we don't touch; `NSEvent` and
+# its own `block2` feature (gating the closure-based monitor API) are the
+# only slice this file needs.
+objc2 = "0.6"
+objc2-app-kit = { version = "0.3", default-features = false, features = ["NSEvent", "block2"] }
+block2 = "0.6"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

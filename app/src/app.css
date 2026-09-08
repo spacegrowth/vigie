@@ -1,0 +1,340 @@
+/* Cool sage — the app's one fixed look (docs/design/*.dc.html is the spec;
+   docs/CONTRACT.md's bloat budget names it a hard acceptance criterion).
+   This is a single-theme design system, not a light/dark pair: the app does
+   not read or react to the operating system's dark-mode setting at all. */
+:root {
+  /* Surfaces */
+  --surface: #f6f8f5;
+  --surface-sunken: #e9eee7;
+  --surface-active: #d6dfd2;
+  --surface-card: #fff;
+
+  /* Text */
+  --text: #1f2a22;
+  --label: #65746a; /* field labels, section captions — mockup's `.label` */
+  --muted: #7c8a80; /* dimmer inline text — mockup's `.muted` */
+  --muted-strong: #33413a; /* quoted comment/review bodies */
+
+  /* Structure */
+  --accent: #2f7a4f;
+  --accent-strong: #24613e; /* .btn-primary hover + border */
+  --accent-deep: #1b4d31; /* deep green for the flat spyglass mark's rings (Logo.svelte) */
+  --link-hover: #1f56b8;
+  --divider: #e3e9e0;
+  --border: #d5ddd2;
+  --border-card: #ececef;
+  --input-border: #d2d2d7;
+  --input-border-focus: #2f7a4f;
+  --checkbox-border-off: #c7c7cc;
+  --placeholder: #9aa89e;
+
+  /* Status */
+  --danger: #a33f36;
+  --ok: #2f7a4f;
+  --warn: #b7791d; /* amber — StatusBar.svelte's rate-limited dot/text */
+
+  /* Diff line tints (DetailPane.svelte's commit patch and PR Files tab,
+     both rendered through lib/diff.ts's parseDiff) — subtle backgrounds
+     over the row's own foreground colours below. */
+  --diff-add-bg: #e3efe6;
+  --diff-add-fg: #265e3c;
+  --diff-del-bg: #f0e4e3;
+  --diff-del-fg: #7a3530;
+
+  /* Kind-badge backgrounds/foregrounds (KindBadge.svelte), from the mockups */
+  --badge-commit-bg: #dfe7ee;
+  --badge-commit-fg: #3a5d80;
+  --badge-open-bg: #dcece0;
+  --badge-open-fg: #2f7a4f;
+  --badge-merged-bg: #e6e2ee;
+  --badge-merged-fg: #6a4f9a;
+  --badge-closed-bg: #f0dede;
+  --badge-closed-fg: #a13f3f;
+  --badge-review-bg: #f3e8d6;
+  --badge-review-fg: #9c5f1f;
+  --badge-comment-bg: #dfecee;
+  --badge-comment-fg: #2c6c7c;
+  --badge-issue-bg: #eae4d6;
+  --badge-issue-fg: #7a6a2f;
+
+  /* Per-login identity colours (Avatar.svelte's generated palette) */
+  --id-1: #5b7bd5;
+  --id-2: #4f9a76;
+  --id-3: #b5764d;
+  --id-4: #8a63c9;
+  --id-5: #c25b7a;
+  --id-6: #7a7a80;
+  --id-7: #3a8f9c;
+  --id-8: #a08a3a;
+  --id-fg: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color-scheme: light;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  color: var(--text);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  font-size: 13px;
+}
+
+/* The tray popover window (main.ts sets this on <html> only for the
+   `#/tray` route) is `"transparent": true` in tauri.conf.json so only
+   TrayPopover.svelte's own rounded `.popover` card paints — but the
+   opaque `body` rule above, written for the main window, would otherwise
+   fill the whole (square) webview and hide the window's rounded corners
+   behind it. This selector only ever matches the popover route; the main
+   window never sets `data-route`, so its own background above is
+   untouched. (Also needs `app.macOSPrivateApi: true` plus the `tauri`
+   crate's `macos-private-api` Cargo feature to actually take visual
+   effect on macOS — see tray.rs's setup() doc comment; out of this
+   packet's file boundaries.) */
+/* The popover window is opaque, so the document behind the panel must be
+   the panel's own colour — anything else shows as a border or a slab where
+   the content does not reach. */
+html[data-route="tray"],
+html[data-route="tray"] body {
+  background: var(--surface-card);
+}
+
+/* Same route marker, a second problem: with no `overscroll-behavior` set
+   anywhere, a two-finger trackpad drag over the popover rubber-bands the
+   *document* itself (html/body), not just whatever scrolls inside it — the
+   whole `.popover` card slides around inside the transparent window and
+   settles back late, briefly exposing the transparent edges around it.
+   `overscroll-behavior: none` on both html and body stops the document
+   from ever being the thing that scrolls/bounces; `overflow: hidden` on
+   body is belt-and-suspenders so there's no scrollable box at all here —
+   TrayPopover.svelte's `.list` is the only element meant to scroll, and it
+   gets its own `overscroll-behavior: contain` there so reaching its ends
+   doesn't chain the gesture back up to this now-inert document. Scoped to
+   the tray route only: the main window has no such overscroll problem
+   (it's an ordinary decorated, non-transparent window) and keeps its
+   normal document scrolling behaviour untouched. */
+html[data-route="tray"],
+html[data-route="tray"] body {
+  overscroll-behavior: none;
+}
+html[data-route="tray"] body {
+  overflow: hidden;
+}
+
+#app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+select {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  height: 30px;
+  padding: 0 10px;
+}
+input::placeholder {
+  color: var(--placeholder);
+}
+input:focus,
+select:focus,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.btn-primary {
+  font-size: 13px;
+  color: var(--surface);
+  background: var(--accent);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 500;
+  border: 1px solid var(--accent-strong);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+  cursor: pointer;
+  transition: background 0.12s, box-shadow 0.12s, transform 0.05s;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btn-text {
+  font-size: 13px;
+  color: var(--accent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.btn-text:hover:not(:disabled) {
+  background: var(--surface-active);
+}
+.btn-text:active:not(:disabled) {
+  background: var(--surface-sunken);
+}
+.btn-text:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.ok-text {
+  color: var(--ok);
+  font-size: 12px;
+}
+
+.error-text {
+  color: var(--danger);
+  font-size: 12px;
+}
+
+/* A watched feed row's accent tint (docs/design/FeedWatched.dc.html's
+   `.wthread`) and eye glyph — shared by EventRow (a standalone row or a
+   thread's child rows) and ThreadBlock (a thread's own header line), so a
+   whole watched thread reads consistently top to bottom. The bar is shifted
+   left by its own border width plus the padding that restores it, so a
+   watched row's text lines up with an unwatched one — only the decorative
+   bar extends into the gutter. */
+.watched {
+  border-left: 3px solid var(--accent);
+  padding-left: 8px;
+  margin-left: -11px;
+}
+.watch-eye {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+/* Scrollbars: hidden app-wide (user request). Scrolling still works —
+   wheel/trackpad/keyboard all scroll as before, only the bar chrome is
+   gone. `scrollbar-width` for standards engines, `::-webkit-scrollbar`
+   for WebKit (WKWebView). The GitHub sign-in webview gets the same rule
+   via an initialization script (commands.rs), since this file cannot
+   reach an external origin.
+   The app's own scroll indicators (the diff/detail body, every list
+   view, the tray popover's list) are a hand-drawn overlay instead — see
+   `lib/scroller.ts` — specifically because a *styled* native scrollbar
+   is WebKit's "classic" one: on a machine set to always show scroll
+   bars, it reserves layout width and shifts content, which isn't ours
+   to control from here. The native bar stays hidden everywhere,
+   unconditionally, including under our own indicator. */
+html,
+body,
+* {
+  scrollbar-width: none;
+}
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Resizable-column drag handle, shared by every list view with fixed,
+   user-adjustable columns (Commits, Issues, Comments, PullRequests,
+   Watched — see lib/columns.ts and lib/columnResize.ts). Lives inside the
+   column it resizes, which needs `position: relative` for this to anchor
+   against; a 4px hit area straddling the column's trailing edge, with only
+   a 1px line drawn inside it — invisible at rest, so every view looks
+   exactly as it does today anywhere the pointer isn't hovering an edge. */
+.col-handle {
+  position: absolute;
+  top: 50%;
+  right: -2px;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  cursor: col-resize;
+}
+.col-handle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: transparent;
+  transition: background 0.1s;
+}
+.col-handle:hover::after {
+  background: var(--border);
+}
+.col-handle.dragging::after {
+  background: var(--accent);
+}
+
+/* The hand-drawn scroll indicator `lib/scroller.ts` creates per region:
+   absolutely positioned (zero layout width, never reflows anything) as
+   a sibling of the scrolling element inside its positioned parent, sized
+   and placed in JS from scrollTop/scrollHeight/clientHeight. Hidden by
+   `display: none` entirely when a region's content doesn't overflow;
+   otherwise faded by the `.visible` class (added while scrolling,
+   pointer-over, or dragging; removed ~700ms after none of those hold —
+   see scroller.ts). `.dragging`/`:hover` bump the thumb to the more
+   visible alpha, the same way a native thumb invites a grab. */
+.scroller-thumb {
+  position: absolute;
+  width: 4px;
+  border-radius: 999px;
+  background-color: rgba(31, 42, 34, 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, background-color 0.15s ease;
+  z-index: 3;
+}
+.scroller-thumb.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.scroller-thumb.dragging,
+.scroller-thumb.visible:hover {
+  /* Checked against both the diff's tinted rows and the plain list
+     background — see DetailPane.svelte's `--diff-add-bg`/`--diff-del-bg`;
+     rgba(31, 42, 34, …) is `--text` at low alpha, spelled out literally
+     since inline styles carry the geometry, not color, and a custom
+     property can't hand this element a one-off alpha either way. */
+  background-color: rgba(31, 42, 34, 0.38);
+}

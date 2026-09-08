@@ -1,0 +1,23 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capabilities for Vigie's windows (main window and the tray popover)",
+  "windows": ["main", "tray-popover"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-hide",
+    "core:window:allow-show",
+    "core:window:allow-close",
+    "core:window:allow-set-position",
+    "core:window:allow-set-focus",
+    "core:window:allow-start-dragging",
+    "core:event:default",
+    "notification:default",
+    "notification:allow-notify",
+    "opener:default",
+    "opener:allow-open-url",
+    "autostart:default",
+    "updater:default",
+    "process:default"
+  ]
+}

@@ -1,0 +1,5 @@
+[
+  { "login": "Alice", "id": 1, "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4" },
+  { "login": "BOB", "id": 2, "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4" },
+  { "login": "alice", "id": 1, "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4" }
+]

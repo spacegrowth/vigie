@@ -1,0 +1,19 @@
+{
+  "id": 1296269,
+  "name": "platform",
+  "full_name": "acme/platform",
+  "private": false,
+  "owner": {
+    "login": "acme",
+    "id": 9919,
+    "avatar_url": "https://avatars.githubusercontent.com/u/9919?v=4",
+    "type": "Organization"
+  },
+  "html_url": "https://github.com/acme/platform",
+  "description": "The platform monolith",
+  "fork": false,
+  "default_branch": "main",
+  "open_issues_count": 7,
+  "visibility": "private",
+  "pushed_at": "{{TS-1200}}"
+}

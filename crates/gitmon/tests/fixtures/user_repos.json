@@ -1,0 +1,26 @@
+[
+  {
+    "name": "platform",
+    "full_name": "acme/platform",
+    "owner": { "login": "acme", "id": 9919, "avatar_url": "https://avatars.githubusercontent.com/u/9919?v=4" },
+    "html_url": "https://github.com/acme/platform",
+    "default_branch": "main",
+    "pushed_at": "{{TS-3600}}"
+  },
+  {
+    "name": "tray",
+    "full_name": "acme/tray",
+    "owner": { "login": "acme", "id": 9919, "avatar_url": "https://avatars.githubusercontent.com/u/9919?v=4" },
+    "html_url": "https://github.com/acme/tray",
+    "default_branch": "main",
+    "pushed_at": "{{TS-172800}}"
+  },
+  {
+    "name": "ancient",
+    "full_name": "acme/ancient",
+    "owner": { "login": "acme", "id": 9919, "avatar_url": "https://avatars.githubusercontent.com/u/9919?v=4" },
+    "html_url": "https://github.com/acme/ancient",
+    "default_branch": "master",
+    "pushed_at": "{{TS-17280000}}"
+  }
+]

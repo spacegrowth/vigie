@@ -1,0 +1,18 @@
+[
+  {
+    "id": 7001,
+    "html_url": "https://github.com/acme/platform/pull/101#pullrequestreview-7001",
+    "body": "Third: the review.",
+    "user": { "login": "bob", "id": 2, "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4" },
+    "state": "APPROVED",
+    "submitted_at": "1970-01-01T00:00:30Z"
+  },
+  {
+    "id": 7002,
+    "html_url": "https://github.com/acme/platform/pull/101#pullrequestreview-7002",
+    "body": "Pending reviews are visible to nobody and must be skipped.",
+    "user": { "login": "carol", "id": 3, "avatar_url": null },
+    "state": "PENDING",
+    "submitted_at": null
+  }
+]

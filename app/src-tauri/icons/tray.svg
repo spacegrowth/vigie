@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Vigie tray glyph: the spyglass mark (source.svg) reduced to three
+       solid black shapes — no gradient, no background square, no stars —
+       so it survives as a monochrome macOS template image at menu-bar size
+       (16-22px; tray.rs sets icon_as_template(true), which recolors this
+       for light/dark/selected states, so every filled pixel here must be
+       pure black, alpha only). Same eyepiece/barrel/objective rects and
+       -38deg rotation as source.svg's spyglass group, with the ring and
+       gloss/highlight rects dropped (too fine to read at tray size) and the
+       whole mark scaled 1.16x about the canvas center so it spans roughly
+       80% of the canvas (rotated bbox of the three rects alone is ~69%). -->
+  <g transform="translate(512 512) scale(1.16) translate(-512 -512)">
+    <g transform="rotate(-38 512 512)">
+      <!-- eyepiece -->
+      <rect x="128" y="448" width="144" height="128" rx="32" fill="#000000"/>
+      <!-- barrel -->
+      <rect x="240" y="416" width="480" height="192" rx="48" fill="#000000"/>
+      <!-- objective -->
+      <rect x="704" y="352" width="144" height="320" rx="48" fill="#000000"/>
+    </g>
+  </g>
+</svg>

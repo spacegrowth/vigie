@@ -1,0 +1,29 @@
+{
+  "sha": "c0ffee1111111111111111111111111111111111",
+  "html_url": "https://github.com/acme/platform/commit/c0ffee1111111111111111111111111111111111",
+  "commit": {
+    "author": { "name": "Alice Ng", "email": "alice@acme.test", "date": "1970-01-01T00:01:00Z" },
+    "committer": { "name": "Alice Ng", "email": "alice@acme.test", "date": "1970-01-01T00:01:00Z" },
+    "message": "Add sparkline to the tray menu\n\nKeeps the last hour of activity in the menu bar."
+  },
+  "author": { "login": "alice", "id": 1, "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4" },
+  "committer": { "login": "alice", "id": 1, "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4" },
+  "stats": { "additions": 104, "deletions": 4, "total": 108 },
+  "files": [
+    {
+      "filename": "src/tray.rs",
+      "status": "modified",
+      "additions": 100,
+      "deletions": 4,
+      "changes": 104,
+      "patch": "@@ -29,7 +29,7 @@\n-old\n+new"
+    },
+    {
+      "filename": "assets/sparkline.png",
+      "status": "added",
+      "additions": 4,
+      "deletions": 0,
+      "changes": 4
+    }
+  ]
+}

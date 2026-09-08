@@ -1,0 +1,53 @@
+[
+  {
+    "number": 101,
+    "state": "open",
+    "title": "Split the poller out of the engine",
+    "html_url": "https://github.com/acme/platform/pull/101",
+    "user": {
+      "login": "alice",
+      "id": 1,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4"
+    },
+    "body": "Moves fetch/derive into its own module so the store lock is never held across a network call.",
+    "created_at": "{{TS-7200}}",
+    "updated_at": "{{TS-1300}}",
+    "closed_at": null,
+    "merged_at": null,
+    "draft": false
+  },
+  {
+    "number": 102,
+    "state": "closed",
+    "title": "Bundle rusqlite instead of linking the system library",
+    "html_url": "https://github.com/acme/platform/pull/102",
+    "user": {
+      "login": "bob",
+      "id": 2,
+      "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4"
+    },
+    "body": "Keeps the bundle self-contained.",
+    "created_at": "{{TS-20000}}",
+    "updated_at": "{{TS-1200}}",
+    "closed_at": "{{TS-1200}}",
+    "merged_at": "{{TS-1200}}",
+    "draft": false
+  },
+  {
+    "number": 103,
+    "state": "closed",
+    "title": "Try tokio for the poll timer",
+    "html_url": "https://github.com/acme/platform/pull/103",
+    "user": {
+      "login": "alice",
+      "id": 1,
+      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4"
+    },
+    "body": "Abandoned: the engine stays synchronous.",
+    "created_at": "{{TS-30000}}",
+    "updated_at": "{{TS-900}}",
+    "closed_at": "{{TS-900}}",
+    "merged_at": null,
+    "draft": false
+  }
+]

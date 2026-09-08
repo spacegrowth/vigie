@@ -1,0 +1,24 @@
+[
+  {
+    "id": 8001,
+    "html_url": "https://github.com/acme/platform/pull/101#discussion_r8001",
+    "body": "Fourth: the review comment.",
+    "user": { "login": "carol", "id": 3, "avatar_url": null },
+    "created_at": "1970-01-01T00:00:40Z",
+    "pull_request_url": "https://api.github.com/repos/acme/platform/pulls/101",
+    "path": "src/poll.rs",
+    "line": 42,
+    "original_line": 40
+  },
+  {
+    "id": 8002,
+    "html_url": "https://github.com/acme/platform/pull/101#discussion_r8002",
+    "body": "Fifth: an outdated comment, whose line only survives as original_line.",
+    "user": { "login": "carol", "id": 3, "avatar_url": null },
+    "created_at": "1970-01-01T00:00:50Z",
+    "pull_request_url": "https://api.github.com/repos/acme/platform/pulls/101",
+    "path": "src/store.rs",
+    "line": null,
+    "original_line": 17
+  }
+]

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: -apple-system, system-ui, 'Helvetica Neue', sans-serif; color: #1f2a22; background: #cfd8cc; -webkit-font-smoothing: antialiased; }
+    a { color: #2f7a4f; text-decoration: none; } a:hover { color: #1f56b8; }
+    .win { width: 960px; height: 640px; display: flex; flex-direction: row; background: #f6f8f5; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.18); }
+    .side { width: 200px; background: #e9eee7; border-right: 1px solid #d5ddd2; display: flex; flex-direction: column; padding: 12px 10px; box-sizing: border-box; gap: 2px; }
+    .lights { display: flex; flex-direction: row; gap: 8px; padding: 2px 6px 18px 6px; }
+    .lights span { width: 12px; height: 12px; border-radius: 6px; display: block; }
+    .nav { display: flex; flex-direction: row; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 6px; font-size: 13px; color: #1f2a22; }
+    .nav.on { background: #d6dfd2; font-weight: 500; }
+    .nav svg { width: 16px; height: 16px; stroke: #65746a; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .nav.on svg { stroke: #1f2a22; }
+    .count { margin-left: auto; font-size: 11px; color: #f6f8f5; background: #2f7a4f; border-radius: 9px; padding: 1px 6px; }
+    .side-foot { margin-top: auto; font-size: 11px; color: #7c8a80; padding: 6px 10px; }
+    .main { flex-grow: 1; display: flex; flex-direction: column; min-width: 0; }
+    .head { display: flex; flex-direction: row; align-items: center; gap: 12px; padding: 18px 24px 12px 24px; }
+    .head h1 { font-size: 17px; font-weight: 600; margin: 0; }
+    .spacer { flex-grow: 1; }
+    .tbtn { font-size: 13px; color: #2f7a4f; padding: 4px 8px; border-radius: 6px; }
+    .pbtn { font-size: 13px; color: #f6f8f5; background: #2f7a4f; padding: 6px 14px; border-radius: 6px; font-weight: 500; }
+    .muted { color: #7c8a80; font-size: 12px; }
+    .body { padding: 0 24px 24px 24px; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; gap: 0; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .label { font-size: 12px; color: #65746a; }
+    .input { height: 30px; border: 1px solid #d2d2d7; border-radius: 6px; padding: 0 10px; font-size: 13px; display: flex; align-items: center; color: #1f2a22; background: #f6f8f5; box-sizing: border-box; }
+    .input.ph { color: #9aa89e; }
+    .row { display: flex; flex-direction: row; align-items: center; gap: 10px; }
+    .quote { font-size: 13px; color: #33413a; line-height: 1.4; border-left: 2px solid #d5ddd2; padding: 2px 0 2px 10px; }
+    .ok { color: #2f7a4f; font-size: 12px; }
+</style>
+</helmet>
+<div class="win" style="flex-direction:column;align-items:center;justify-content:center;background:#f6f8f5;position:relative">
+  <div class="lights" style="position:absolute;top:12px;left:16px"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+  <div style="width:560px;display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:6px"><h1 style="font-size:22px;font-weight:600;margin:0">Vigie <span style="font-size:13px;font-weight:400;color:#7c8a80;padding-left:6px">vee-zhee · French for lookout</span></h1><span style="font-size:13px;color:#65746a">Watch your team on GitHub. Sign in once, we suggest the rest. Nothing leaves this Mac except calls to GitHub.</span></div>
+    <div class="field"><span class="label">GitHub account</span><div class="row" style="gap:12px"><span class="ok">✓ signed in as alice</span></div><span class="muted">Vigie asks for read access to repos, orgs and your profile.</span></div>
+    <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:24px">
+      <div class="field"><span class="label">Repos · from your recent activity</span><div style="display:flex;flex-direction:column;gap:8px"><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span>acme/platform<span class="muted">you pushed 2 days ago</span></span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span>acme/web<span class="muted">12 open PRs</span></span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span>acme/infra<span class="muted"></span></span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #c7c7cc;background:#fff;display:block;flex-shrink:0"></span>acme/docs<span class="muted"></span></span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #c7c7cc;background:#fff;display:block;flex-shrink:0"></span>acme/legacy-api<span class="muted">archived</span></span></div><div class="input ph" style="height:28px;margin-top:4px">or paste owner/name</div></div>
+      <div class="field"><span class="label">People · contributors of those repos</span><div style="display:flex;flex-direction:column;gap:8px"><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span><div style="width:18px;height:18px;border-radius:9px;background:#5b7bd5;color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">P</div>priya<span class="muted">41 commits · acme/platform</span></span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span><div style="width:18px;height:18px;border-radius:9px;background:#4f9a76;color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">M</div>marcus<span class="muted">28 reviews · acme/web</span></span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span><div style="width:18px;height:18px;border-radius:9px;background:#b5764d;color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">L</div>lena<span class="muted">19 commits · acme/infra</span></span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span><div style="width:18px;height:18px;border-radius:9px;background:#8a63c9;color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">T</div>tom<span class="muted">9 comments</span></span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #c7c7cc;background:#fff;display:block;flex-shrink:0"></span><div style="width:18px;height:18px;border-radius:9px;background:#c25b7a;color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">A</div>aiko<span class="muted">org member</span></span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #c7c7cc;background:#fff;display:block;flex-shrink:0"></span><div style="width:18px;height:18px;border-radius:9px;background:#7a7a80;color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0">D</div>dev<span class="muted">bot · dependabot</span></span></div><div class="input ph" style="height:28px;margin-top:4px">search contributors and org members</div></div>
+    </div>
+    <div class="row" style="justify-content:flex-end;gap:14px"><span class="muted">3 repos · 4 people</span><span class="pbtn">Start watching</span></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: -apple-system, system-ui, 'Helvetica Neue', sans-serif; color: #1f2a22; background: #cfd8cc; -webkit-font-smoothing: antialiased; }
+    a { color: #2f7a4f; text-decoration: none; } a:hover { color: #1f56b8; }
+    .win { width: 960px; height: 640px; display: flex; flex-direction: row; background: #f6f8f5; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.18); }
+    .side { width: 200px; background: #e9eee7; border-right: 1px solid #d5ddd2; display: flex; flex-direction: column; padding: 12px 10px; box-sizing: border-box; gap: 2px; }
+    .lights { display: flex; flex-direction: row; gap: 8px; padding: 2px 6px 18px 6px; }
+    .lights span { width: 12px; height: 12px; border-radius: 6px; display: block; }
+    .nav { display: flex; flex-direction: row; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 6px; font-size: 13px; color: #1f2a22; }
+    .nav.on { background: #d6dfd2; font-weight: 500; }
+    .nav svg { width: 16px; height: 16px; stroke: #65746a; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .nav.on svg { stroke: #1f2a22; }
+    .count { margin-left: auto; font-size: 11px; color: #f6f8f5; background: #2f7a4f; border-radius: 9px; padding: 1px 6px; }
+    .side-foot { margin-top: auto; font-size: 11px; color: #7c8a80; padding: 6px 10px; }
+    .main { flex-grow: 1; display: flex; flex-direction: column; min-width: 0; }
+    .head { display: flex; flex-direction: row; align-items: center; gap: 12px; padding: 18px 24px 12px 24px; }
+    .head h1 { font-size: 17px; font-weight: 600; margin: 0; }
+    .spacer { flex-grow: 1; }
+    .tbtn { font-size: 13px; color: #2f7a4f; padding: 4px 8px; border-radius: 6px; }
+    .pbtn { font-size: 13px; color: #f6f8f5; background: #2f7a4f; padding: 6px 14px; border-radius: 6px; font-weight: 500; }
+    .muted { color: #7c8a80; font-size: 12px; }
+    .body { padding: 0 24px 24px 24px; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; gap: 0; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .label { font-size: 12px; color: #65746a; }
+    .input { height: 30px; border: 1px solid #d2d2d7; border-radius: 6px; padding: 0 10px; font-size: 13px; display: flex; align-items: center; color: #1f2a22; background: #f6f8f5; box-sizing: border-box; }
+    .input.ph { color: #9aa89e; }
+    .row { display: flex; flex-direction: row; align-items: center; gap: 10px; }
+    .quote { font-size: 13px; color: #33413a; line-height: 1.4; border-left: 2px solid #d5ddd2; padding: 2px 0 2px 10px; }
+    .ok { color: #2f7a4f; font-size: 12px; }
+</style>
+</helmet>
+<div class="win">
+<div class="side">
+  <div class="lights"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+  <div style="font-size:13px;font-weight:600;padding:0 10px 8px 10px">Vigie</div>
+  <div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:10px 10px 4px 10px">Activity</div>
+<div class="nav"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"></path></svg><span>Feed</span><span class="count">7</span></div>
+<div class="nav"><svg viewBox="0 0 24 24"><circle cx="6" cy="5" r="2.5"></circle><circle cx="6" cy="19" r="2.5"></circle><circle cx="18" cy="19" r="2.5"></circle><path d="M6 7.5v9M18 16.5V11a3 3 0 0 0-3-3h-4"></path></svg><span>Pull requests</span><span class="count">3</span></div>
+<div class="nav"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"></circle><path d="M2 12h6.5M15.5 12H22"></path></svg><span>Commits</span><span class="count">2</span></div>
+<div class="nav"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"></path></svg><span>Comments</span><span class="count">2</span></div>
+<div class="nav"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.5"></circle></svg><span>Issues</span></div><div class="nav"><svg viewBox="0 0 24 24"><path d="M4 20V12M10 20V6M16 20v-9M4 20h16"></path></svg><span>Summary</span></div>
+<div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:10px 10px 4px 10px">Watching</div>
+<div class="nav"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"></circle><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-3-1.8-5.2-4.5-5.8"></path></svg><span>People</span></div>
+<div class="nav"><svg viewBox="0 0 24 24"><path d="M6 3h12v18H6zM9 7h6M9 11h6"></path></svg><span>Repos</span></div>
+<div class="nav"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"></circle><path d="M5 21c0-4 3-7 7-7s7 3 7 7"></path></svg><span>Teams</span></div>
+<div class="nav"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5 10 6.5 10 6.5-3.6 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg><span>Watched</span></div>
+<div style="height:10px"></div>
+<div class="nav on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg><span>Settings</span></div>
+
+  <div class="side-foot">Polled 2 min ago · next in 1 min<br>Cmd+R polls now</div>
+</div>
+<div class="main">
+<div class="head"><h1>Settings</h1><span class="muted">changes save as you go</span></div>
+<div class="body">
+<div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:28px;padding-top:4px">
+<div style="display:flex;flex-direction:column;gap:18px">
+  <div class="field"><span class="label">GitHub account</span><div class="row" style="gap:10px"><span style="font-size:13px">Signed in as <b>alice</b> · via GitHub</span><span class="tbtn">Sign out</span></div><span class="muted">Sign-in is stored in your Keychain. Nothing leaves this Mac except calls to GitHub.</span></div>
+  <div class="field"><span class="label">Poll every</span><div class="row" style="gap:8px"><div class="input" style="width:80px">2</div><span style="font-size:13px">minutes</span></div></div>
+  <div class="field"><span class="label">Show activity from</span>
+    <span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:7px;border:4px solid #2f7a4f;box-sizing:border-box;display:block"></span>My team only</span>
+    <span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:7px;border:1px solid #c7c7cc;box-sizing:border-box;display:block"></span>Everyone</span></div>
+  <div class="row" style="justify-content:space-between"><span style="font-size:13px;font-weight:500">Open at login</span><span style="width:34px;height:20px;border-radius:10px;background:#2f7a4f;position:relative;display:block;flex-shrink:0"><span style="position:absolute;top:2px;left:16px;width:16px;height:16px;border-radius:8px;background:#fff;display:block"></span></span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px">
+  <div class="row" style="justify-content:space-between"><span style="font-size:13px;font-weight:500">Notifications</span><span style="width:34px;height:20px;border-radius:10px;background:#2f7a4f;position:relative;display:block;flex-shrink:0"><span style="position:absolute;top:2px;left:16px;width:16px;height:16px;border-radius:8px;background:#fff;display:block"></span></span></div>
+  <div class="field"><span class="label">Notify me about</span><div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:8px"><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span>Commits</span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span>PRs opened</span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span>PRs merged</span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #c7c7cc;background:#fff;display:block;flex-shrink:0"></span>PRs closed</span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span>Reviews</span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span>PR comments</span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #2f7a4f;background:#2f7a4f;display:block;flex-shrink:0"></span>Issues opened</span><span class="row" style="gap:8px;font-size:13px"><span style="width:14px;height:14px;border-radius:3px;border:1px solid #c7c7cc;background:#fff;display:block;flex-shrink:0"></span>Issue comments</span></div></div>
+  <div class="field"><span class="label">Quiet hours</span><div class="row" style="gap:8px"><div class="input" style="width:80px">19:00</div><span class="muted">to</span><div class="input" style="width:80px">08:00</div></div></div>
+</div>
+</div><div class="muted" style="margin-top:auto;padding-top:16px">Vigie 0.1 · pronounced vee-zhee · French for the lookout in a ship's crow's nest</div>
+</div>
+</div>
+</div>
+</x-dc>
+</body>
+</html>
