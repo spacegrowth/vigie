@@ -8,6 +8,7 @@
   import { onMount, onDestroy } from "svelte";
   import { emit, listen } from "@tauri-apps/api/event";
   import { getVersion } from "@tauri-apps/api/app";
+  import { check as checkForUpdate } from "@tauri-apps/plugin-updater";
   import { getCurrentWindow } from "@tauri-apps/api/window";
   import { api } from "../lib/api";
   import { groupThreads, type EventGroup } from "../lib/threads";
@@ -21,6 +22,11 @@
   /** Shown in the footer instead of a one-off instruction: the app's own
    * version is the thing worth having in a panel you glance at every day. */
   let appVersion = $state<string | null>(null);
+  /** Someone who lives in this popover and rarely opens the window would
+   * otherwise never learn an update exists — the banner announcing one is in
+   * the main window. Checked here too, quietly: a version and a way through,
+   * never a download or an install from a menu. */
+  let updateVersion = $state<string | null>(null);
 
   let events = $state<Event[]>([]);
   let lastPolledAt = $state<number | null>(null);
@@ -90,6 +96,9 @@
     getVersion()
       .then((v) => (appVersion = v))
       .catch(() => (appVersion = null));
+    checkForUpdate()
+      .then((u) => (updateVersion = u?.version ?? null))
+      .catch(() => (updateVersion = null));
     lastPolledAt = Date.now() / 1000;
     unlisten = await listen<PollResult>("new-events", () => load());
     clockInterval = setInterval(() => (now = Date.now() / 1000), 15_000);
@@ -177,6 +186,11 @@
   </div>
 
   <div class="foot muted">
+    {#if updateVersion}
+      <button class="foot-update" onclick={openMainWindow} title="Open Vigie to install {updateVersion}">
+        Update to {updateVersion}
+      </button>
+    {/if}
     <span class="foot-name">Vigie</span>{#if appVersion}<span class="foot-version">{appVersion}</span>{/if}
   </div>
 </div>
@@ -307,6 +321,16 @@
     align-items: baseline;
     gap: 5px;
     font-size: 11px;
+  }
+  .foot-update {
+    margin-right: auto;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
   }
   .foot-name {
     font-weight: 600;
