@@ -431,6 +431,21 @@ fn map_error_response(resp: reqwest::blocking::Response) -> EngineError {
                     "That organisation requires single sign-on. Your sign-in is fine — the token \
                      needs authorising for it: {url}"
                 )),
+                // An organisation with OAuth app access restrictions — on by
+                // default for every new org — blocks this app until an owner
+                // approves it. GitHub says so in prose; the fix is one click,
+                // so point at it rather than leaving the reader to hunt
+                // through settings.
+                None if message.contains("OAuth App access restrictions")
+                    || message.contains("third-party access")
+                    || message.contains("restricting-access") =>
+                {
+                    EngineError::auth(format!(
+                        "That organisation has not approved Vigie yet — your sign-in is fine. \
+                         Request or grant access under Authorized OAuth Apps, then add the repo \
+                         again: https://github.com/settings/connections/applications"
+                    ))
+                }
                 None => EngineError::auth(format!(
                     "That account is signed in, but cannot see this. GitHub said: {message}"
                 )),
