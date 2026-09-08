@@ -260,9 +260,19 @@ pub fn remove_click_outside_monitor() {
 }
 
 fn show_window(app: &AppHandle) {
+    // Unhide the APPLICATION first — Tauri's own macOS call. A menu-bar app
+    // is hidden as a process, so showing one of its windows while the app
+    // itself is hidden leaves the window behind everything.
+    #[cfg(target_os = "macos")]
+    let _ = app.show();
     if let Some(window) = app.get_webview_window("main") {
+        let _ = window.unminimize();
         let _ = window.show();
         let _ = window.set_focus();
+        // Last resort, and the one that always works: briefly pinning the
+        // window above others raises it even when activation is refused.
+        let _ = window.set_always_on_top(true);
+        let _ = window.set_always_on_top(false);
         // Showing and focusing a window is not the same as bringing the
         // APPLICATION forward: a background app stays behind whatever the
         // user is looking at, so "Open" and "Check for updates…" appeared to
