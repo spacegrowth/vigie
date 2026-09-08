@@ -406,6 +406,9 @@ fn map_error_response(resp: reqwest::blocking::Response) -> EngineError {
     let status = resp.status().as_u16();
     let remaining = header_u32(resp.headers(), "x-ratelimit-remaining");
     let reset_at = header_i64(resp.headers(), "x-ratelimit-reset");
+    // Read before `response_message` consumes the response.
+    let sso_authorize_url = header_str(resp.headers(), "x-github-sso")
+        .and_then(|v| v.split("url=").nth(1).map(|u| u.trim().to_string()));
     let message = response_message(resp).unwrap_or_else(|| format!("GitHub returned {status}"));
 
     match status {
@@ -414,8 +417,25 @@ fn map_error_response(resp: reqwest::blocking::Response) -> EngineError {
         403 | 429 if remaining == Some(0) => EngineError::rate_limited(message, reset_at),
         // A 429 without an exhausted primary budget is a secondary rate limit.
         429 => EngineError::rate_limited(message, reset_at),
-        // Any other 403 is a permission/scope problem, not a budget problem.
-        403 => EngineError::auth(message),
+        // Any other 403 is a permission problem, not a budget one — and NOT a
+        // sign-in problem, which is how the app used to word every 403. The
+        // two that actually happen:
+        //   * an organisation enforcing SAML single sign-on: the token is
+        //     valid, but has not been authorised for that org. GitHub says so
+        //     in an `x-github-sso` header carrying the URL that authorises it.
+        //   * a token without access to that repository at all.
+        // Both are actionable, and neither is fixed by signing in again.
+        403 => {
+            match sso_authorize_url.as_deref() {
+                Some(url) => EngineError::auth(format!(
+                    "That organisation requires single sign-on. Your sign-in is fine — the token \
+                     needs authorising for it: {url}"
+                )),
+                None => EngineError::auth(format!(
+                    "That account is signed in, but cannot see this. GitHub said: {message}"
+                )),
+            }
+        }
         s if (500..=599).contains(&s) => EngineError::network(message),
         _ => EngineError::invalid(message),
     }

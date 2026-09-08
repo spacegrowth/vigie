@@ -403,7 +403,13 @@ export function isEngineError(e: unknown): e is EngineError {
 export function engineErrorMessage(e: EngineError): string {
   switch (e.kind) {
     case "auth":
-      return "GitHub rejected that sign-in. Sign in again to continue.";
+      // The engine words the actionable cases itself — a token that needs
+      // authorising for an organisation using single sign-on, or one that
+      // simply cannot see the thing. Only fall back to "sign in again" when
+      // it had nothing more specific to say.
+      return e.message && e.message.trim().length > 0
+        ? e.message
+        : "GitHub rejected that sign-in. Sign in again to continue.";
     case "not_found":
       return "Not found. Double-check the name and that the token can see it.";
     case "rate_limited":
