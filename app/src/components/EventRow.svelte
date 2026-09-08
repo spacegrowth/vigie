@@ -186,7 +186,10 @@
     const raw = commitSplit ? commitSplit.body : (event.body ?? event.body_preview);
     return raw?.trim() || null;
   });
-  let previewText = $derived(fullPreview ? fullBody : cappedPreview);
+  // Layout C: one clamped line of description, never a paragraph. The popover
+  // briefly showed the whole body, which turned every row into prose in a
+  // 400px column — the reason this is capped again.
+  let previewText = $derived(cappedPreview);
   /** Every `Co-Authored-By` trailer that resolves to a known agent, in
    * order — empty on a row with no agent trailer (most rows), which
    * renders no avatar badge at all. The badge shows the first agent's mark;
@@ -404,7 +407,10 @@
   .title-text.strong {
     font-weight: 600;
   }
-  /* `fullPreview` (tray popover) only — the title wraps over as many lines
+  /* `fullPreview` (tray popover) only — the title gets up to two lines and
+     then truncates, rather than wrapping without limit; a subject that needs
+     more than two lines is read in the app.
+     (was: the title wraps over as many lines
      as it needs instead of clipping to one, same reasoning as `.preview`
      below: a 400px panel with no per-row scroll shouldn't hide any of the
      title either. `overflow-wrap` guards against a single unbroken token
@@ -412,8 +418,14 @@
      container instead of breaking. */
   .title-text.wrap {
     white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
+    overflow: hidden;
+    /* Two lines, then stop. Unlimited wrapping turned a long commit subject
+       into a five-line block in a 400px column, which is what made the
+       popover read as prose; anything longer is read in the app. */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow-wrap: anywhere;
   }
   /* Shrinks before `.title` gives up any of its 120px floor (this packet's
